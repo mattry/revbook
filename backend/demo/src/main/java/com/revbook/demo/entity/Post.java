@@ -3,6 +3,8 @@ package com.revbook.demo.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import org.hibernate.annotations.CreationTimestamp;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,7 +28,9 @@ public class Post {
     private User poster;
 
     private String postText;
-    private Long timePosted;
+
+    @CreationTimestamp
+    private Date timePosted;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Comment> commentSet = new HashSet<>();

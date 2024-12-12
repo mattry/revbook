@@ -2,7 +2,9 @@ package com.revbook.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,7 +33,9 @@ public class Comment {
     private Post post;
 
     private String commentText;
-    private Long timePosted;
+
+    @CreationTimestamp
+    private Date timePosted;
 
     @ManyToOne
     @JoinColumn(name = "parent_comment_id")
