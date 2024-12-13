@@ -135,3 +135,7 @@ replay_pid*
 
 # End of https://www.toptal.com/developers/gitignore/api/java
 
+backend/data/
+backend/demo/HELP.md
+backend/demo/data
+
