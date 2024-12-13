@@ -1,6 +1,5 @@
 package com.revbook.demo.controller;
 
-import com.revbook.demo.exception.InvalidInputException;
 import com.revbook.demo.service.PostService;
 import com.revbook.demo.entity.Post;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "http:localhost/3000")
 @RestController
-public class PostContoller {
+public class PostController {
 
     @Autowired
     private PostService postService;
