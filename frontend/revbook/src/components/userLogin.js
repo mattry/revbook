@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const UserRegistration = () => {
+const UserLogin = () => {
 
     const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
         email: "",
-        password: "",
-        
+        password: ""
     });
 
     const handleInputChange = (e) => {
@@ -23,7 +20,7 @@ const UserRegistration = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:8080/register", formData, {
+            const response = await axios.post("http://localhost:8080/login", formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -37,22 +34,8 @@ const UserRegistration = () => {
 
     return(
         <>
-        <h1>Registration Form</h1>
+        <h1>Login Form</h1>
         <form onSubmit={submitHandler}>
-            <label htmlFor="firstName">First Name </label>
-            <input 
-                type="text" 
-                name="firstName" 
-                value={formData.firstName}
-                onChange={handleInputChange}
-            /><br/>
-            <label htmlFor="lastName">Last Name </label>
-            <input 
-                type="text" 
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleInputChange}
-            /><br/>
             <label htmlFor="email">Email </label>
             <input 
                 type="email" 
@@ -68,10 +51,11 @@ const UserRegistration = () => {
                 onChange={handleInputChange}
             /><br/>
             <br/>
-            <button type="submit">Register</button>
+            <button type="submit">Login</button>
         </form>
         </>
     );
-};
 
-export default UserRegistration;
+}
+
+export default UserLogin;
