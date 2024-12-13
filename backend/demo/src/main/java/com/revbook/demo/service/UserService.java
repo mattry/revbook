@@ -29,4 +29,22 @@ public class UserService {
 
         return userRepository.save(user);
     }
+
+    public User authenticate(String email, String password) {
+
+        // Check if user with this email exists
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isPresent()) {
+            User existing = userOptional.get();
+
+            // Verify password match
+            if(!existing.getPassword().equals(password)) {
+                throw new InvalidInputException("Incorrect password, please try again");
+            }
+
+            return existing;
+        } else {
+            throw new InvalidInputException("Email not registered, please sign-up");
+        }
+    }
 }
