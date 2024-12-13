@@ -27,4 +27,14 @@ public class UserController {
         }
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<User> login(@RequestBody User user) {
+        try{
+            User authUser = userService.authenticate(user.getEmail(), user.getPassword());
+            return ResponseEntity.ok(authUser);
+        } catch (InvalidInputException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+    }
+
 }
