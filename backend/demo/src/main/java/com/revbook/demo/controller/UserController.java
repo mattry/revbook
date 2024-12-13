@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-    private UserService userSerice;
+    private UserService userService;
 
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
         try {
-            User registeredUser = userSerice.registerUser(user);
+            User registeredUser = userService.registerUser(user);
             return ResponseEntity.ok(registeredUser);
         } catch (EmailAlreadyInUseException | InvalidInputException e){
             return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
