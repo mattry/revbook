@@ -1,16 +1,19 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import UserRegistration from './components/userRegistration';
 import UserLogin from './components/userLogin';
+import LandingPage from './components/landingPage';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Welcome to Revbook</h1><hr/>
-      <UserRegistration />
-      <hr/>
-      <UserLogin />
-      <hr/>
-    </div>
+    <Router>
+      <Routes>
+          <Route path ="/register" element={<UserRegistration />} />
+          <Route path ="/login" element={<UserLogin />} />
+          <Route path ="/" element={<LandingPage />} />
+      </Routes>
+    </Router>
   );
 }
 

@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const UserRegistration = () => {
+
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         firstName: "",
@@ -29,9 +32,14 @@ const UserRegistration = () => {
                 },
             });
 
-            console.log(response.data);
+            // set user information in session storage
+            sessionStorage.setItem("user", JSON.stringify(response.data));
+
+            // since we are registering from inside the landing, refresh to show logged-in content
+            window.location.reload();
+
         } catch(error){
-            console.error("Some error ", error);
+            console.error("Some error: ", error);
         }
     };
 

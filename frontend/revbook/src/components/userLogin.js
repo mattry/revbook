@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const UserLogin = () => {
+
+    const navigate = useNavigate(); 
 
     const [formData, setFormData] = useState({
         email: "",
@@ -26,9 +29,14 @@ const UserLogin = () => {
                 },
             });
 
-            console.log(response.data);
+            // set user information in session storage
+            sessionStorage.setItem("user", JSON.stringify(response.data));
+
+            // since we are logging in from inside the landing, refresh to show logged-in content
+            window.location.reload();
+
         } catch(error){
-            console.error("Some error ", error);
+            console.error("Some error: ", error);
         }
     };
 
