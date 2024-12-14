@@ -29,12 +29,10 @@ public class User {
     private String lastName;
     private String password;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_connections",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "connected_user_id")
-    )
-    private Set<User> connections = new HashSet<>();
+    @OneToMany(mappedBy = "followee", cascade = CascadeType.ALL)
+    private Set<Connection> followers = new HashSet<>();
+
+    @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL)
+    private Set<Connection> following = new HashSet<>();
 
 }
