@@ -48,7 +48,7 @@ public class CommentController {
         }
     }
 
-    @GetMapping("/comments/{commentId/replies")
+    @GetMapping("/comments/{commentId}/replies")
     public ResponseEntity<Set<Comment>> getChildComments(@PathVariable Long commentId) {
         try {
             Set<Comment> childComments = commentService.getChildComments(commentId);
