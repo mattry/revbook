@@ -41,6 +41,26 @@ public class PostController {
         }
     }
 
+    @GetMapping("/posts/{userId}")
+    public ResponseEntity<List<Post>> getUserPosts(@PathVariable Long userId) {
+        try {
+            List<Post> userPosts = postService.getUserPosts(userId);
+            return ResponseEntity.ok(userPosts);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    @DeleteMapping("/posts/{postId}")
+    public ResponseEntity<?> deletePostById(@PathVariable Long postId){
+        try {
+            postService.deleteMessageById(postId);
+            return ResponseEntity.ok(1);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
 
 
 

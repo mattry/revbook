@@ -63,4 +63,35 @@ public class PostService {
 
         throw new RuntimeException("User not found");
     }
+
+    // method to get all user posts, used to display posts on user pages
+    public List<Post> getUserPosts(Long userId) {
+
+        // Check that the userId belongs to an actual user
+        Optional<User> userOptional = userRepository.findById(userId);
+        if(userOptional.isPresent()){
+            User poster = userOptional.get();
+            Optional<List<Post>> userPostsOptional = postRepository.findByPoster(poster);
+            List<Post> userPosts = new ArrayList<Post>();
+            userPostsOptional.ifPresent(userPosts::addAll);
+
+            // reverse the posts by timePosted so they display in a reverse chronological order
+            // most recent -> least recent
+            userPosts.sort(Comparator.comparing(Post::getTimePosted).reversed());
+            return userPosts;
+        }
+
+        throw new RuntimeException("User not found");
+    }
+
+    public void deleteMessageById(Long postId) {
+
+        // verify that the post exists before trying to delete it
+        Optional<Post> postOptional = postRepository.findById(postId);
+        postOptional.ifPresent(post -> postRepository.delete(post));
+
+        throw new RuntimeException("Message not found");
+
+    }
+
 }
