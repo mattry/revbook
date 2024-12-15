@@ -3,6 +3,7 @@ import { useState } from 'react';
 import UserLogin from "./userLogin";
 import UserRegistration from "./userRegistration";
 import PostForm from "./postForm";
+import UserFeed from "./userFeed";
 
 // if a user is not logged in, they will be served the login form or registration form, with the ability to toggle between them 
 // if a user is logged in, the landing page will show the homepage, which will contain posts from connected users and the ability to make a new post
@@ -31,6 +32,7 @@ const LandingPage = () => {
         <>
         <h2>Welcome, {user.firstName} </h2>
         <PostForm />
+        <UserFeed />
         </>
     );
 };
