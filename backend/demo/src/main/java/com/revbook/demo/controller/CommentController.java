@@ -1,8 +1,9 @@
 package com.revbook.demo.controller;
 
+import com.revbook.demo.dto.CommentDTO;
+import com.revbook.demo.dto.ReactionDTO;
 import com.revbook.demo.entity.Comment;
 import com.revbook.demo.service.CommentService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,40 +20,62 @@ public class CommentController {
     CommentService commentService;
 
     @PostMapping("/posts/{postId}/comments")
-    public ResponseEntity<Comment> commentOnPost(@PathVariable Long postId, @RequestBody Comment comment) {
+    public ResponseEntity<CommentDTO> commentOnPost(@PathVariable Long postId, @RequestBody CommentDTO requestCommentDTO) {
         try {
-            Comment createdComment = commentService.commentOnPost(postId, comment);
-            return ResponseEntity.ok(createdComment);
+            CommentDTO createdCommentDTO = commentService.commentOnPost(postId, requestCommentDTO);
+            System.out.println("DTO created" + createdCommentDTO);
+            return ResponseEntity.ok(createdCommentDTO);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 
     @PostMapping("/comments/{commentId}/reply")
-    public ResponseEntity<Comment> commentOnComment(@PathVariable Long commentId, @RequestBody Comment comment) {
+    public ResponseEntity<CommentDTO> commentOnComment(@PathVariable Long commentId, @RequestBody CommentDTO requestCommentDTO) {
         try {
-            Comment createdComment = commentService.commentOnComment(commentId, comment);
-            return ResponseEntity.ok(createdComment);
+            CommentDTO createdCommentDTO = commentService.commentOnComment(commentId, requestCommentDTO);
+            return ResponseEntity.ok(createdCommentDTO);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 
     @GetMapping("/posts/{postId}/comments")
-    public ResponseEntity<List<Comment>> getCommentsByPost(@PathVariable Long postId) {
+    public ResponseEntity<List<CommentDTO>> getCommentsByPost(@PathVariable Long postId) {
         try {
-            List<Comment> comments = commentService.getCommentsByPostId(postId);
-            return ResponseEntity.ok(comments);
+            List<CommentDTO> commentDTOs = commentService.getCommentDTOsByPostId(postId);
+            return ResponseEntity.ok(commentDTOs);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 
     @GetMapping("/comments/{commentId}/replies")
-    public ResponseEntity<Set<Comment>> getChildComments(@PathVariable Long commentId) {
+    public ResponseEntity<Set<CommentDTO>> getChildComments(@PathVariable Long commentId) {
         try {
-            Set<Comment> childComments = commentService.getChildComments(commentId);
-            return ResponseEntity.ok(childComments);
+            Set<CommentDTO> childCommentDTOs = commentService.getChildCommentDTOs(commentId);
+            return ResponseEntity.ok(childCommentDTOs);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    @PostMapping("comments/{commentId}/reactions")
+    public ResponseEntity<ReactionDTO> reactToPost (@PathVariable Long commentId, @RequestBody ReactionDTO requestReactionDTO) {
+        try {
+            ReactionDTO madeReactionDTO = commentService.reactToComment(commentId, requestReactionDTO);
+            return ResponseEntity.ok(madeReactionDTO);
+
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    @GetMapping("/comments/{commentId}/reactions")
+    public ResponseEntity<Set<ReactionDTO>> getPostReactions (@PathVariable Long commentId) {
+        try {
+            Set<ReactionDTO> reactionDTOS = commentService.getCommentReactions(commentId);
+            return ResponseEntity.ok(reactionDTOS);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }

@@ -27,6 +27,9 @@ public class UserService {
             throw new InvalidInputException("Invalid email");
         }
 
+        System.out.println("Making user with email: " + user.getEmail());
+        System.out.println("Making user with password: " + user.getPassword());
+
         return userRepository.save(user);
     }
 
@@ -47,4 +50,5 @@ public class UserService {
             throw new InvalidInputException("Email not registered, please sign-up");
         }
     }
+
 }

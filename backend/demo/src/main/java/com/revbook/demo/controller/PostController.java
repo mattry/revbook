@@ -1,5 +1,6 @@
 package com.revbook.demo.controller;
 
+import com.revbook.demo.dto.ReactionDTO;
 import com.revbook.demo.entity.User;
 import com.revbook.demo.service.PostService;
 import com.revbook.demo.entity.Post;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 /*
     This controller will handle creating posts, serving posts, and deleting posts
@@ -61,7 +63,26 @@ public class PostController {
         }
     }
 
+    @PostMapping("posts/{postId}/reactions")
+    public ResponseEntity<ReactionDTO> reactToPost (@PathVariable Long postId, @RequestBody ReactionDTO requestReactionDTO) {
+        try {
+            ReactionDTO madeReactionDTO = postService.reactToPost(postId, requestReactionDTO);
+            return ResponseEntity.ok(madeReactionDTO);
 
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    @GetMapping("/posts/{postId}/reactions")
+    public ResponseEntity<Set<ReactionDTO>> getPostReactions (@PathVariable Long postId) {
+        try {
+            Set<ReactionDTO> reactionDTOS = postService.getPostReactions(postId);
+            return ResponseEntity.ok(reactionDTOS);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
 
 
 }

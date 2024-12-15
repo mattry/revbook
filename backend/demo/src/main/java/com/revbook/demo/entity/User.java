@@ -1,7 +1,11 @@
 package com.revbook.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,6 +19,8 @@ import java.util.Set;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name="users")
 public class User {
 
@@ -27,11 +33,16 @@ public class User {
 
     private String firstName;
     private String lastName;
+
+    @JsonIgnore
+    @NonNull
     private String password;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "followee", cascade = CascadeType.ALL)
     private Set<Connection> followers = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL)
     private Set<Connection> following = new HashSet<>();
 

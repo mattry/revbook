@@ -1,5 +1,6 @@
 package com.revbook.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -32,9 +33,11 @@ public class Post {
     @CreationTimestamp
     private LocalDateTime timePosted;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private Set<Comment> commentSet = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Reaction> reactionSet = new HashSet<>();
 
