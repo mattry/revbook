@@ -1,5 +1,7 @@
 package com.revbook.demo.controller;
 
+import com.revbook.demo.dto.UserDTO;
+import com.revbook.demo.dto.UserAuthDTO;
 import com.revbook.demo.exception.EmailAlreadyInUseException;
 import com.revbook.demo.exception.InvalidInputException;
 import com.revbook.demo.service.UserService;
@@ -18,20 +20,20 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) {
+    public ResponseEntity<UserDTO> registerUser(@RequestBody UserAuthDTO userAuthDTO) {
         try {
-            User registeredUser = userService.registerUser(user);
-            return ResponseEntity.ok(registeredUser);
+            UserDTO registeredUserDTO = userService.registerUser(userAuthDTO);
+            return ResponseEntity.ok(registeredUserDTO);
         } catch (EmailAlreadyInUseException | InvalidInputException e){
             return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody User user) {
+    public ResponseEntity<UserDTO> login(@RequestBody UserAuthDTO userAuthDTO) {
         try{
-            User authUser = userService.authenticate(user.getEmail(), user.getPassword());
-            return ResponseEntity.ok(authUser);
+            UserDTO authUserDTO = userService.authenticate(userAuthDTO);
+            return ResponseEntity.ok(authUserDTO);
         } catch (InvalidInputException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
