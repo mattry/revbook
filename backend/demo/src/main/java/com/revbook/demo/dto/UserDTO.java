@@ -10,9 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserDTO {
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Long userId;
-
     private String email;
     private String firstName;
     private String lastName;
