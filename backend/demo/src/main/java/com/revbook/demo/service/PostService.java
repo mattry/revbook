@@ -1,6 +1,7 @@
 package com.revbook.demo.service;
 
 import com.revbook.demo.dto.CommentDTO;
+import com.revbook.demo.dto.PostDTO;
 import com.revbook.demo.dto.ReactionDTO;
 import com.revbook.demo.entity.Comment;
 import com.revbook.demo.entity.Post;
@@ -28,27 +29,32 @@ public class PostService {
     @Autowired
     private ReactionRepository reactionRepository;
 
-    public Post createPost(Post post) {
+    public PostDTO createPostDTO(PostDTO requestPostDTO) {
 
         // Check that the user attempting to make the post exists
-        Optional<User> userOptional = userRepository.findByEmail(post.getPoster().getEmail());
+        Optional<User> userOptional = userRepository.findById(requestPostDTO.getPosterId());
         if(userOptional.isEmpty()){
             throw new RuntimeException("User not found");
         }
 
         // Check that post text is valid
         // we will limit their length to 280 characters
-        if(post.getPostText() == null || post.getPostText().isBlank() || post.getPostText().length() > 280) {
+        if(requestPostDTO.getPostText() == null || requestPostDTO.getPostText().isBlank() || requestPostDTO.getPostText().length() > 280) {
             throw new InvalidInputException("Invalid message text");
         }
 
-        return postRepository.save(post);
+        Post post = new Post();
+        post.setPoster(userOptional.get());
+        post.setPostText(requestPostDTO.getPostText());
+        Post saved = postRepository.save(post);
+
+        return mapToPostDTO(saved);
     }
 
 
     // this method is used to get the user's feed
     // user feed consists of a user's own posts and posts from users they follow.
-    public List<Post> getUserFeed(Long userId){
+    public List<PostDTO> getUserFeed(Long userId){
 
         // Check that the userId belongs to an actual user
         Optional<User> userOptional = userRepository.findById(userId);
@@ -63,14 +69,19 @@ public class PostService {
             // reverse the posts by timePosted so they display in a reverse chronological order
             // most recent -> least recent
             userFeed.sort(Comparator.comparing(Post::getTimePosted).reversed());
-            return userFeed;
-        }
 
+            List<PostDTO> userFeedDTOs = new ArrayList<>();
+
+            for (Post post: userFeed){
+                userFeedDTOs.add(mapToPostDTO(post));
+            }
+            return userFeedDTOs;
+        }
         throw new RuntimeException("User not found");
     }
 
     // method to get all user posts, used to display posts on user pages
-    public List<Post> getUserPosts(Long userId) {
+    public List<PostDTO> getUserPostDTOs(Long userId) {
 
         // Check that the userId belongs to an actual user
         Optional<User> userOptional = userRepository.findById(userId);
@@ -83,7 +94,15 @@ public class PostService {
             // reverse the posts by timePosted so they display in a reverse chronological order
             // most recent -> least recent
             userPosts.sort(Comparator.comparing(Post::getTimePosted).reversed());
-            return userPosts;
+
+            List<PostDTO> userPostDTOS = new ArrayList<>();
+
+            for (Post post: userPosts){
+                userPostDTOS.add(mapToPostDTO(post));
+            }
+
+            return userPostDTOS;
+
         }
 
         throw new RuntimeException("User not found");
@@ -152,6 +171,18 @@ public class PostService {
         return reactionDTO;
     }
 
+    public PostDTO mapToPostDTO(Post post) {
+        PostDTO postDTO = new PostDTO();
+        postDTO.setTimePosted(post.getTimePosted());
+        postDTO.setPostText(post.getPostText());
+        postDTO.setPosterId(post.getPoster().getUserId());
+        postDTO.setLastName(post.getPoster().getLastName());
+        postDTO.setFirstName(post.getPoster().getFirstName());
+        postDTO.setPostId(post.getPostId());
+
+
+        return postDTO;
+    }
 
 
 

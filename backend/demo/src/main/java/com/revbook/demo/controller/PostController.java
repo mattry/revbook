@@ -1,5 +1,6 @@
 package com.revbook.demo.controller;
 
+import com.revbook.demo.dto.PostDTO;
 import com.revbook.demo.dto.ReactionDTO;
 import com.revbook.demo.entity.User;
 import com.revbook.demo.service.PostService;
@@ -24,19 +25,19 @@ public class PostController {
     private PostService postService;
 
     @PostMapping("/posts")
-    public ResponseEntity<Post> createPost(@RequestBody Post post) {
+    public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO requestPostDTO) {
         try{
-            Post createdPost = postService.createPost(post);
-            return ResponseEntity.ok(createdPost);
+            PostDTO createdPostDTO = postService.createPostDTO(requestPostDTO);
+            return ResponseEntity.ok(createdPostDTO);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 
     @GetMapping("/feed/{userId}")
-    public ResponseEntity<List<Post>> getFeed(@PathVariable Long userId) {
+    public ResponseEntity<List<PostDTO>> getFeed(@PathVariable Long userId) {
         try{
-            List<Post> feed = postService.getUserFeed(userId);
+            List<PostDTO> feed = postService.getUserFeed(userId);
             return ResponseEntity.ok(feed);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -44,10 +45,10 @@ public class PostController {
     }
 
     @GetMapping("/posts/{userId}")
-    public ResponseEntity<List<Post>> getUserPosts(@PathVariable Long userId) {
+    public ResponseEntity<List<PostDTO>> getUserPosts(@PathVariable Long userId) {
         try {
-            List<Post> userPosts = postService.getUserPosts(userId);
-            return ResponseEntity.ok(userPosts);
+            List<PostDTO> userPostDTOs = postService.getUserPostDTOs(userId);
+            return ResponseEntity.ok(userPostDTOs);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
