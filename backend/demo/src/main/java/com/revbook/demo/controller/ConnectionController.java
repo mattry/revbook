@@ -1,5 +1,7 @@
 package com.revbook.demo.controller;
 
+import com.revbook.demo.dto.ConnectionDTO;
+import com.revbook.demo.dto.UserDTO;
 import com.revbook.demo.entity.Connection;
 import com.revbook.demo.entity.User;
 import com.revbook.demo.service.ConnectionService;
@@ -17,40 +19,40 @@ public class ConnectionController {
     @Autowired
     private ConnectionService connectionService;
 
-    @PostMapping("/follow")
-    public ResponseEntity<Connection> followUser(@RequestParam Long followerId, @RequestParam Long followeeId) {
+    @PostMapping("/users/{userId}/follow")
+    public ResponseEntity<ConnectionDTO> followUser(@RequestBody ConnectionDTO requestConnectionDTO) {
         try{
-            Connection newConnection = connectionService.followUser(followerId, followeeId);
-            return ResponseEntity.ok(newConnection);
+            ConnectionDTO newConnectionDTO = connectionService.followUser(requestConnectionDTO);
+            return ResponseEntity.ok(newConnectionDTO);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 
-    @DeleteMapping("/unfollow")
-    public ResponseEntity<?> unfollowUser(@RequestParam Long followerId, @RequestParam Long followeeId) {
+    @DeleteMapping("/users/{userId}/unfollow")
+    public ResponseEntity<?> unfollowUser(@RequestBody ConnectionDTO removeConnectionDTO) {
         try{
-            connectionService.unfollowUser(followerId, followeeId);
+            connectionService.unfollowUser(removeConnectionDTO);
             return ResponseEntity.ok(1);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 
-    @GetMapping("/{userId}/followers")
-    public ResponseEntity<Set<User>> getFollowers(@PathVariable Long userId) {
+    @GetMapping("/users/{userId}/followers")
+    public ResponseEntity<Set<UserDTO>> getFollowers(@PathVariable Long userId) {
         try{
-            Set<User> followers = connectionService.getFollowersByUserId(userId);
+            Set<UserDTO> followers = connectionService.getFollowersByUserId(userId);
             return ResponseEntity.ok(followers);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 
-    @GetMapping("/{userId}/following")
-    public ResponseEntity<Set<User>> getFollowing(@PathVariable Long userId) {
+    @GetMapping("/users/{userId}/following")
+    public ResponseEntity<Set<UserDTO>> getFollowing(@PathVariable Long userId) {
         try{
-            Set<User> following = connectionService.getFollowingByUserId(userId);
+            Set<UserDTO> following = connectionService.getFollowingByUserId(userId);
             return ResponseEntity.ok(following);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
