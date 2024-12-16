@@ -14,7 +14,7 @@ const PostForm = () => {
         e.preventDefault();
 
         const request = {
-            poster: user,
+            posterId: user.userId,
             postText: postText,
         };
 

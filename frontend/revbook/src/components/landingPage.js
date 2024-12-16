@@ -30,9 +30,9 @@ const LandingPage = () => {
 
     return(
         <>
-        <h2>Welcome, {user.firstName} </h2>
-        <PostForm />
-        <UserFeed />
+            <h2>Welcome, {user.firstName} </h2>
+            <PostForm />
+            <UserFeed />
         </>
     );
 };
