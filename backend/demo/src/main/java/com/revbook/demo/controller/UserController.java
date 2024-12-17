@@ -1,5 +1,7 @@
 package com.revbook.demo.controller;
 
+import com.revbook.demo.dto.UpdateNameDTO;
+import com.revbook.demo.dto.UpdatePasswordDTO;
 import com.revbook.demo.dto.UserDTO;
 import com.revbook.demo.dto.UserAuthDTO;
 import com.revbook.demo.exception.EmailAlreadyInUseException;
@@ -36,6 +38,26 @@ public class UserController {
             return ResponseEntity.ok(authUserDTO);
         } catch (InvalidInputException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+    }
+
+    @PatchMapping("/update-name")
+    public ResponseEntity<UserDTO> updateName(@RequestBody UpdateNameDTO updateNameDTO) {
+        try {
+            UserDTO updatedUser = userService.updateName(updateNameDTO);
+            return ResponseEntity.ok(updatedUser);
+        } catch (InvalidInputException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    @PatchMapping("/update-password")
+    public ResponseEntity<Void> updatePassword(@RequestBody UpdatePasswordDTO updatePasswordDTO) {
+        try {
+            userService.updatePassword(updatePasswordDTO);
+            return ResponseEntity.ok().build();
+        } catch (InvalidInputException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 

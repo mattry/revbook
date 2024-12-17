@@ -1,5 +1,7 @@
 package com.revbook.demo.service;
 
+import com.revbook.demo.dto.UpdateNameDTO;
+import com.revbook.demo.dto.UpdatePasswordDTO;
 import com.revbook.demo.dto.UserDTO;
 import com.revbook.demo.dto.UserAuthDTO;
 import com.revbook.demo.entity.User;
@@ -60,6 +62,36 @@ public class UserService {
             throw new InvalidInputException("Email not registered, please sign-up");
         }
     }
+
+    public UserDTO updateName(UpdateNameDTO updateNameDTO) {
+        Optional<User> userOptional = userRepository.findById(updateNameDTO.getUserId());
+        if (userOptional.isPresent()) {
+            User existing = userOptional.get();
+            existing.setFirstName(updateNameDTO.getFirstName());
+            existing.setLastName(updateNameDTO.getLastName());
+            User updated = userRepository.save(existing);
+            return mapToDTO(updated);
+        } else {
+            throw new InvalidInputException("User not found");
+        }
+    }
+
+    public void updatePassword(UpdatePasswordDTO updatePasswordDTO) {
+        Optional<User> userOptional = userRepository.findById(updatePasswordDTO.getUserId());
+        if (userOptional.isPresent()) {
+            User existing = userOptional.get();
+            if (existing.getPassword().equals(updatePasswordDTO.getCurrentPassword())) {
+                existing.setPassword(updatePasswordDTO.getNewPassword());
+                User updated = userRepository.save(existing);
+                return;
+            } else {
+                throw new InvalidInputException("Password mismatch");
+            }
+        } else {
+            throw new RuntimeException("User not found");
+        }
+    }
+
 
 
     // UserDTOs do not have password fields so they can be sent to the client without exposing sensitive information
