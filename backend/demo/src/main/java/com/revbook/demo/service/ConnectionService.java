@@ -55,10 +55,12 @@ public class ConnectionService {
             if (connectionRepository.existsByFollowerAndFollowee(follower, followee)) {
                 Connection connection = connectionRepository.findByFollowerAndFollowee(follower, followee);
                 connectionRepository.delete(connection);
+                return;
+            } else {
+                throw new RuntimeException("Connection not found");
             }
-            throw new RuntimeException("Connection not found");
         }
-        throw new RuntimeException();
+        throw new RuntimeException("User(s) not found");
     }
 
     public Set<UserDTO> getFollowersByUserId(Long userId) {

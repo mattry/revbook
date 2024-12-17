@@ -57,7 +57,7 @@ public class PostController {
     @DeleteMapping("/posts/{postId}")
     public ResponseEntity<?> deletePostById(@PathVariable Long postId){
         try {
-            postService.deleteMessageById(postId);
+            postService.deletePostById(postId);
             return ResponseEntity.ok(1);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);

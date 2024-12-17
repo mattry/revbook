@@ -108,14 +108,15 @@ public class PostService {
         throw new RuntimeException("User not found");
     }
 
-    public void deleteMessageById(Long postId) {
+    public void deletePostById(Long postId) {
 
         // verify that the post exists before trying to delete it
         Optional<Post> postOptional = postRepository.findById(postId);
-        postOptional.ifPresent(post -> postRepository.delete(post));
-
-        throw new RuntimeException("Message not found");
-
+        if (postOptional.isPresent()){
+            postRepository.delete(postOptional.get());
+        } else {
+            throw new RuntimeException("Post not found");
+        }
     }
 
     public ReactionDTO reactToPost(Long postId, ReactionDTO requestReactionDTO) {
