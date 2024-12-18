@@ -92,6 +92,16 @@ public class UserService {
         }
     }
 
+    public UserDTO getUserById(Long userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if(userOptional.isPresent()){
+            User user = userOptional.get();
+            return mapToDTO(user);
+        } else {
+            throw new InvalidInputException("Invalid user id");
+        }
+    }
+
 
 
     // UserDTOs do not have password fields so they can be sent to the client without exposing sensitive information
