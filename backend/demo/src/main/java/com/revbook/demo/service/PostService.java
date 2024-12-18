@@ -124,9 +124,31 @@ public class PostService {
         Optional<User> userOptional = userRepository.findById((requestReactionDTO.getReacterId()));
 
         if (postOptional.isPresent() && userOptional.isPresent()){
+            Post post = postOptional.get();
+            User user = userOptional.get();
+
+            // check if user has reacted to post already
+            Optional<Reaction> existingReaction = reactionRepository.findByReacterAndPost(user, post);
+
+            if (existingReaction.isPresent()) {
+                Reaction reaction = existingReaction.get();
+
+                // if the user has already reacted to this post with the same reaction type...
+                if (reaction.getReactionType().name().equals(requestReactionDTO.getReactionType())) {
+                    throw new RuntimeException("You have already reacted with the same type.");
+                }
+
+                // if the user has reacted with a different reaction type, change type
+                reaction.setReactionType(Reaction.ReactionType.valueOf(requestReactionDTO.getReactionType()));
+                Reaction updatedReaction = reactionRepository.save(reaction);
+
+                return mapToReactionDTO(updatedReaction);
+            }
+
+            // no reaction currently exists, so we make a new one
             Reaction reaction = new Reaction();
-            reaction.setPost(postOptional.get());
             reaction.setComment(null);
+            reaction.setPost(postOptional.get());
             reaction.setReacter(userOptional.get());
             reaction.setReactionType(Reaction.ReactionType.valueOf(requestReactionDTO.getReactionType()));
 

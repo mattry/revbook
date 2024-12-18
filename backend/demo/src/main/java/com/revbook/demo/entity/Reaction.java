@@ -11,7 +11,11 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="reactions")
+
+@Table(name="reactions", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"post_id", "reacter_id"}, name = "unique_post_reaction_per_user"),
+        @UniqueConstraint(columnNames = {"comment_id", "reacter_id"}, name = "unique_comment_reaction_per_user"),
+})
 public class Reaction {
 
     @Id

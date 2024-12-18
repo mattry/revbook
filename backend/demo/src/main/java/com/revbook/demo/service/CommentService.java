@@ -136,6 +136,28 @@ public class CommentService {
         Optional<User> userOptional = userRepository.findById((requestReactionDTO.getReacterId()));
 
         if (commentOptional.isPresent() && userOptional.isPresent()){
+            Comment comment = commentOptional.get();
+            User user = userOptional.get();
+
+            // check if user has reacted to comment already
+            Optional<Reaction> existingReaction = reactionRepository.findByReacterAndComment(user, comment);
+
+            if (existingReaction.isPresent()) {
+                Reaction reaction = existingReaction.get();
+
+                // if the user has already reacted to this comment with the same reaction type...
+                if (reaction.getReactionType().name().equals(requestReactionDTO.getReactionType())) {
+                    throw new RuntimeException("You have already reacted with the same type.");
+                }
+
+                // if the user has reacted with a different reaction type, change type
+                reaction.setReactionType(Reaction.ReactionType.valueOf(requestReactionDTO.getReactionType()));
+                Reaction updatedReaction = reactionRepository.save(reaction);
+
+                return mapToReactionDTO(updatedReaction);
+            }
+
+            // no reaction currently exists, so we make a new one
             Reaction reaction = new Reaction();
             reaction.setPost(null);
             reaction.setComment(commentOptional.get());
@@ -147,7 +169,7 @@ public class CommentService {
             return mapToReactionDTO(saved);
         }
 
-        throw new RuntimeException("Error reacting to post");
+        throw new RuntimeException("Error reacting to comment");
     }
 
     public Set<ReactionDTO> getCommentReactions(Long commentId){
