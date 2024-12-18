@@ -15,4 +15,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("SELECT p FROM Post p WHERE p.poster IN (" +
             "SELECT c.followee FROM Connection c WHERE c.follower = :user)")
     Optional<List<Post>> findByFollowing(@Param("user") User user);
+
+    // get posts whose postText contains the search query in it
+    @Query("SELECT p FROM Post p WHERE LOWER(p.postText) LIKE LOWER(CONCAT('%', :query, '%'))")
+    List<Post> searchPostsByText(@Param("query") String query);
 }
