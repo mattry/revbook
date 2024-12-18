@@ -19,7 +19,7 @@ const UserFeed = () => {
     
     useEffect(() => {
         getPosts();
-    }, []);
+    }, [posts]);
 
     if (posts.length > 0) {
         return (
