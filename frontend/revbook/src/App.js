@@ -3,6 +3,7 @@ import './App.css';
 import UserRegistration from './components/userRegistration';
 import UserLogin from './components/userLogin';
 import LandingPage from './components/landingPage';
+import UserProfileComponent from './components/user-components/UserProfileComponent';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
           <Route path ="/register" element={<UserRegistration />} />
           <Route path ="/login" element={<UserLogin />} />
           <Route path ="/" element={<LandingPage />} />
+          <Route path="/user/:id" element={<UserProfileComponent />} />
       </Routes>
     </Router>
   );
