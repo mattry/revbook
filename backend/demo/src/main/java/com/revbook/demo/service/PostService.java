@@ -133,9 +133,10 @@ public class PostService {
             if (existingReaction.isPresent()) {
                 Reaction reaction = existingReaction.get();
 
-                // if the user has already reacted to this post with the same reaction type...
+                // if the user has already reacted to this post with the same reaction type, we will undo their reaction
                 if (reaction.getReactionType().name().equals(requestReactionDTO.getReactionType())) {
-                    throw new RuntimeException("You have already reacted with the same type.");
+                    reactionRepository.delete(reaction);
+                    return null;
                 }
 
                 // if the user has reacted with a different reaction type, change type
