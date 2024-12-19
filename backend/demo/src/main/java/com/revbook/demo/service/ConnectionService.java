@@ -24,6 +24,20 @@ public class ConnectionService {
     @Autowired
     private UserRepository userRepository;
 
+    public boolean isUserFollowing(Long followerId, Long followeeId) {
+        Optional<User> followerOptional = userRepository.findById(followerId);
+        Optional<User> followeeOptional = userRepository.findById(followeeId);
+
+        if (followerOptional.isPresent() && followeeOptional.isPresent()) {
+            User follower = followerOptional.get();
+            User followee = followeeOptional.get();
+
+            return connectionRepository.existsByFollowerAndFollowee(follower, followee);
+        }
+
+        return false;
+    }
+
     public ConnectionDTO followUser(ConnectionDTO requestConnectionDTO) {
         Optional<User> followerOptional = userRepository.findById(requestConnectionDTO.getFollowerId());
         Optional<User> followeeOptional = userRepository.findById(requestConnectionDTO.getFolloweeId());

@@ -59,4 +59,15 @@ public class ConnectionController {
         }
     }
 
+    @GetMapping("/users/{followerId}/isFollowing/{followeeId}")
+    public ResponseEntity<Boolean> isUserFollowering(@PathVariable Long followerId, @PathVariable Long followeeId){
+        try {
+            boolean isFollowing = connectionService.isUserFollowing(followerId, followeeId);
+            return ResponseEntity.ok(isFollowing);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+
+        }
+    }
+
 }
