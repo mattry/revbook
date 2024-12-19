@@ -6,6 +6,7 @@
 */
 
 import ConnectionDisplay from "./ConnectionDisplay";
+import ConnectionManagement from "./ConnectionManagement";
 import UserPostsComponent from "./UserPostsComponent";
 
 const ViewUserProfile = ({displayUser, posts, followers, following}) => {
@@ -15,6 +16,8 @@ const ViewUserProfile = ({displayUser, posts, followers, following}) => {
         <p>Viewing user</p>
         <h3>{displayUser.firstName} {displayUser.lastName}</h3>
         <ConnectionDisplay followers={followers} following={following} />
+        <br/>
+        <ConnectionManagement displayUser={displayUser} />
         <UserPostsComponent posts={posts}/>
         </>
     )
