@@ -9,15 +9,25 @@
 import ProfileManagement from "./ProfileManagement";
 import UserPostsComponent from "./UserPostsComponent";
 import ConnectionDisplay from "./ConnectionDisplay";
+import { useState } from "react";
+import Modal from 'react-modal';
 
 const ActiveUserProfile = ({displayUser, posts, followers, following}) => {
+
+    const [visible, setVisible] = useState(false);
 
     return(
         <>
         <p>Hello, active user</p>
         <h3>{displayUser.firstName} {displayUser.lastName}</h3>
         <hr/>
-        <ProfileManagement />
+        <button onClick={() => setVisible(true)}>Profile Management</button>
+        <Modal isOpen={visible}>
+            <div>
+                <button onClick={() => setVisible(false)}>Close</button>
+                <ProfileManagement />
+            </div>   
+        </Modal>
         <hr/>
         <ConnectionDisplay followers={followers} following={following} />
         <hr/>
