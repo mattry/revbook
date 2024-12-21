@@ -8,8 +8,11 @@
 import axios from "axios";
 import { useState } from "react";
 import SearchDisplay from "./SearchDisplay";
+import { useNavigate } from "react-router-dom";
 
 const SearchComponent = () => {
+
+    const navigate = useNavigate();
 
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState(null);
@@ -30,7 +33,7 @@ const SearchComponent = () => {
 
         try{
             const response = await axios.post("http://localhost:8080/search", request);
-            setSearchResults(response.data);
+            navigate("/results", { state: { searchResults: response.data } });
         } catch (error) {
             console.error("Error performing search: ", error);
         } finally {
@@ -53,8 +56,6 @@ const SearchComponent = () => {
             />
             <button>Search</button>
         </form>
-        {/* if there is search results, display them in SearchDisplay component */}
-        {searchResults && <SearchDisplay results={searchResults} /> }
         </>
     )
 

@@ -1,18 +1,23 @@
 import { Link } from "react-router-dom";
+import { useUser } from "./components/UserContext";
 import SearchComponent from "./components/search-components/SearchComponent";
 
 const NavBar = () => {
 
-    const user = JSON.parse(sessionStorage.getItem("user"));
+    const { user } = useUser();
 
     return (
         <div id="navbar">
             <h2>RevBook</h2>
-            <SearchComponent />
-            <div className="links">
-                <Link to ="/">Home</Link>
-                <Link to={`/user/${user.userId}`}>Profile</Link>
-            </div>
+            {user ? 
+            <>
+                <SearchComponent />
+                <div className="links">
+                    <Link to ="/">Home</Link>
+                    <Link to={`/user/${user.userId}`}>Profile</Link>
+                </div>
+            </>
+            : null}
         </div>
     )
 

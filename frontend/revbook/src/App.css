@@ -5,10 +5,4 @@
   font-family: Arial, sans-serif; 
 }
 
-.post-container, .comment-container { 
-  width: 80%; 
-  margin: auto; 
-  overflow: hidden; 
-  padding: 20px;
-  border: 2px solid;
-} 
+

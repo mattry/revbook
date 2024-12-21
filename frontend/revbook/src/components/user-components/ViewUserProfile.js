@@ -9,17 +9,18 @@ import ConnectionDisplay from "./ConnectionDisplay";
 import ConnectionManagement from "./ConnectionManagement";
 import UserPostsComponent from "./UserPostsComponent";
 
-const ViewUserProfile = ({displayUser, posts, followers, following}) => {
+const ViewUserProfile = ({displayUser, posts, followers, following, getFollowers, getFollowing}) => {
 
     return(
-        <>
-        <p>Viewing user</p>
-        <h3>{displayUser.firstName} {displayUser.lastName}</h3>
-        <ConnectionDisplay followers={followers} following={following} />
-        <br/>
-        <ConnectionManagement displayUser={displayUser} />
-        <UserPostsComponent posts={posts}/>
-        </>
+        <div className="profile-container">
+            <h3>{displayUser.firstName} {displayUser.lastName}</h3>
+            <ConnectionDisplay followers={followers} following={following} />
+            <ConnectionManagement displayUser={displayUser} getFollowers={getFollowers} getFollowing={getFollowing} /><br/>
+            <br/>
+            <hr/>
+            <br/>
+            <UserPostsComponent posts={posts}/>
+        </div>
     )
 
 }

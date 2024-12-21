@@ -17,22 +17,22 @@ const ActiveUserProfile = ({displayUser, posts, followers, following}) => {
     const [visible, setVisible] = useState(false);
 
     return(
-        <>
-        <p>Hello, active user</p>
-        <h3>{displayUser.firstName} {displayUser.lastName}</h3>
-        <hr/>
-        <button onClick={() => setVisible(true)}>Profile Management</button>
-        <Modal isOpen={visible}>
-            <div>
-                <button onClick={() => setVisible(false)}>Close</button>
-                <ProfileManagement />
-            </div>   
-        </Modal>
-        <hr/>
-        <ConnectionDisplay followers={followers} following={following} />
-        <hr/>
-        <UserPostsComponent posts={posts}/>
-        </>
+        <div className="profile-container">
+            <h3>{displayUser.firstName} {displayUser.lastName}</h3>
+            <ConnectionDisplay followers={followers} following={following} />
+            <button onClick={() => setVisible(true)}>Profile Management</button>
+            <Modal isOpen={visible}>
+                <div>
+                    <button onClick={() => setVisible(false)}>Close</button>
+                    <ProfileManagement />
+                </div>   
+            </Modal>
+            <br/>
+            <br/>
+            <hr/>
+            <br/>
+            <UserPostsComponent posts={posts}/>
+        </div>
     )
 
 }

@@ -1,5 +1,5 @@
 /*
-    Since this component is only rendered in the ActiveUserProfile component, we won't take in any user info as props and just use the session storage.
+    Since this component is only rendered in the ActiveUserProfile component
     This component will serve as the parent component for handling user profile management.
     This includes the child components for handling password change as well as name changing.
     We will set state for userFirstName and userLastName.
@@ -11,12 +11,14 @@
 
 import axios from "axios";
 import { useState } from "react";
+import { useUser } from "../UserContext";
 import ChangeName from "./ChangeName";
 import ChangePassword from "./ChangePassword";
 
 
 const ProfileManagement = () => {
-    const user = JSON.parse(sessionStorage.getItem("user"));
+    const { user } = useUser();
+    const { updateUser } = useUser();
 
     const [firstName, setFirstName] = useState(user.firstName);
     const [lastName, setLastName] = useState(user.lastName);
@@ -55,8 +57,7 @@ const ProfileManagement = () => {
         try{
             const response = await axios.patch("http://localhost:8080/update-name", request);
             console.log(response);
-            sessionStorage.setItem("user", JSON.stringify(response.data));
-            window.location.reload();
+            updateUser(response.data);
         } catch (error) {
             console.error("Error updating name: ", error);
         }
@@ -66,7 +67,6 @@ const ProfileManagement = () => {
 
     return(
         <>
-        <p>Hello profile management</p>
         {
             showChangeName ? 
             <ChangeName firstName={firstName} lastName={lastName} nameSubmitHandler={nameSubmitHandler} setFirstName = {setFirstName} setLastName={setLastName} /> 

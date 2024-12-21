@@ -26,20 +26,16 @@ const ConnectionDisplay = ({followers, following}) => {
     }
 
     return (
-        <>
-        <h3>Hello Connection Display</h3>
-        <span>Followers: {followers.length}</span>
-        <button onClick={() => displayList("followers")}>View</button>
-        <br/>
-        <span>Following: {following.length}</span>
-        <button onClick={() => displayList("following")}>View</button>
+        <div className="connection-stats">
+        <span onClick={() => displayList("followers")}>Followers: {followers.length}</span><br/>
+        <span onClick={() => displayList("following")}>Following: {following.length}</span>
         <Modal isOpen={visible}>
             <div>
                 <button onClick={close}>Close</button>
                 <ConnectionList connections={listType == "followers" ? followers : following} title={listType == "followers" ? "Followers:" : "Following:"} />
             </div>   
         </Modal>
-        </>
+        </div>
     );
 }
 

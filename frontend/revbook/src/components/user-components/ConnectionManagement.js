@@ -6,10 +6,11 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useUser } from "../UserContext";
 
-const ConnectionManagement = ({displayUser}) => {
+const ConnectionManagement = ({displayUser, getFollowers, getFollowing}) => {
 
-    const user = JSON.parse(sessionStorage.getItem("user"));
+    const { user } = useUser();
     const [connection, setConnection] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -39,6 +40,8 @@ const ConnectionManagement = ({displayUser}) => {
             try {
                 await axios.post(`http://localhost:8080/users/${displayUser.userId}/follow`, request);
                 setConnection(true);
+                getFollowers();
+                getFollowing();
             } catch (error) {
                 console.error("Error following user: ", error);
             }
@@ -46,6 +49,8 @@ const ConnectionManagement = ({displayUser}) => {
             try {
                 await axios.delete(`http://localhost:8080/users/${displayUser.userId}/unfollow`, { data: request });
                 setConnection(false)
+                getFollowers();
+                getFollowing();
             } catch (error) {
                 console.error("Error unfollowing user: ", error);
             }

@@ -1,24 +1,30 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import UserRegistration from './components/userRegistration';
-import UserLogin from './components/userLogin';
-import LandingPage from './components/landingPage';
+import LandingPage from './components/LandingPage';
 import UserProfileComponent from './components/user-components/UserProfileComponent';
 import NavBar from './NavBar';
+import { UserProvider } from './components/UserContext';
+import ResultsPage from './components/search-components/ResultsPage';
+import Modal from "react-modal";
+
+Modal.setAppElement("#root");
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <NavBar />
-      </div>
-      <Routes>
-          <Route path ="/register" element={<UserRegistration />} />
-          <Route path ="/login" element={<UserLogin />} />
-          <Route path ="/" element={<LandingPage />} />
-          <Route path="/user/:id" element={<UserProfileComponent />} />
-      </Routes>
-    </Router>
+    <UserProvider>
+      <Router>
+        <div className="App">
+          <NavBar />
+        </div>
+        <div className='container'>
+          <Routes>
+              <Route path ="/" element={<LandingPage />} />
+              <Route path="/user/:id" element={<UserProfileComponent />} />
+              <Route path="/results" element={<ResultsPage />} />
+          </Routes>
+        </div>
+      </Router>
+    </UserProvider>
   );
 }
 

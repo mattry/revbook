@@ -1,4 +1,5 @@
-import PostComponent from "../postComponent";
+import PostComponent from "../post-components/PostComponent";
+import { Link } from "react-router-dom";
 
 const SearchDisplay = ({results}) => {
 
@@ -8,7 +9,11 @@ const SearchDisplay = ({results}) => {
         if (!users || users.length === 0) return <p>No users found.</p>
 
         return users.map((user) => (
-            <p>{user.firstName} {user.lastName}</p>
+            <p className="user-result">
+                <Link to={`/user/${user.userId}`} className="user-link">
+                    {user.firstName} {user.lastName}
+                </Link>
+            </p>
         ));
     };
 
@@ -22,9 +27,12 @@ const SearchDisplay = ({results}) => {
 
     return (
         <>
-        <h3>Users: </h3>
+        <h3 className="results-heading">Users: </h3>
+        <br/>
         {displayUsers()}
-        <h3>Posts: </h3>
+        <br/>
+        <h3 className="results-heading">Posts: </h3>
+        <br/>
         {displayPosts()}
         </>
     )

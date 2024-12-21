@@ -10,13 +10,14 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useUser } from "../UserContext";
 import { useParams } from "react-router-dom";
 import ActiveUserProfile from "./ActiveUserProfile";
 import ViewUserProfile from "./ViewUserProfile";
 
 const UserProfileComponent = () => {
 
-    const user = JSON.parse(sessionStorage.getItem("user"));
+    const { user } = useUser();
     const { id } = useParams();
 
     // flag to determine if the requested profile is the logged in user
@@ -82,7 +83,7 @@ const UserProfileComponent = () => {
         getPosts();
         getFollowers();
         getFollowing();
-    }, [id]);
+    }, [user]);
     
     // While we wait, let's render this so there is no error on screen
     if (!responseUser) {
@@ -105,6 +106,8 @@ const UserProfileComponent = () => {
                 posts={posts}
                 followers={followers}
                 following={following}
+                getFollowers={getFollowers}
+                getFollowing={getFollowing}
             />
         )
     }

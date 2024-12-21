@@ -1,13 +1,442 @@
+:root {
+  --950: #020617;
+  --900: #0f172a;
+  --800: #1e293b;
+  --700: #334155;
+  --600: #475569;
+  --500: #64748b;
+  --400: #94a3b8;
+  --300: #cbd5e1;
+  --200: #e2e8f0;
+  --100: #f1f5f9;
+  --50: #f8fafc;
+}
+
 body {
+  height: 100%;
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: linear-gradient(to right, #581c87 5% , var(--950) );
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.container {
+  margin-left: 10%;
+  margin-right: 10%;
+  height: 100vh;
+  display:flex;
+  flex-direction: column;
+  background-color: rgba(203, 213, 225, 0.15);
+  align-items: center;
+  border-radius: 8px;
+}
+
+#navbar {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+  display: flex;
+  align-items: center;
+  margin-left: 10%;
+  margin-right: 10%;
+  justify-content: space-between;
+  background-color: #ff7014;
+  border-radius: 8px;
+}
+
+#navbar h2 {
+  align-self: flex-start;
+  color: var(--100);
+}
+
+#navbar a {
+  margin-left: 10px;
+  text-decoration: none;
+  padding: 6px;
+  color: var(--100);
+}
+
+#navbar a:hover {
+  color: var(--800);
+}
+
+#navbar form {
+  margin: 0 auto;
+  flex-grow: 1; 
+  display: flex;
+  justify-content: center;
+}
+
+#navbar .links {
+  margin-left: auto;
+}
+
+#post-form {
+  text-align: center;
+}
+
+.welcome-header {
+  text-align: center;
+}
+
+.auth-form {
+  margin: 0 auto;
+  padding: 5%;
+  background-color: var(--100);
+  border: 1px solid var(--300);
+  border-radius: 8px;
+  text-align: center;
+  width: 50%;
+}
+
+.auth-form h1 {
+  text-align: center;
+  color: var(--800);
+}
+
+.auth-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--800); 
+  font-weight: bold;
+}
+
+.auth-form input {
+  width: 100%; 
+  padding: 10px;
+  margin-bottom: 16px;
+  border: 1px solid var(--300);
+  border-radius: 6px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.auth-form input:focus {
+  outline: none;
+  border-color: var(--500); 
+  box-shadow: 0 0 4px var(--500); 
+}
+
+.auth-form button {
+  display: block;
+  width: 100%; 
+  padding: 10px 16px;
+  background-color: #ff7014; 
+  color: var(--100); 
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.auth-form button:hover {
+  background-color: #cc580f; 
+}
+
+.landing-page {
+  width: 80%;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: var(--100);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.welcome-header {
+  text-align: center;
+  color: var(--800);
+  margin-bottom: 20px;
+}
+
+.post-form {
+  margin-bottom: 20px;
+}
+
+.post-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.post-form textarea {
+  width: 100%;
+  font-size: 16px;
+  padding: 10px;
+  border: 1px solid var(--300);
+  border-radius: 6px;
+  resize: none;
+}
+
+.post-form button {
+  align-self: flex-end;
+  padding: 10px 20px;
+  background-color: #ff7014;
+  color: var(--100);
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.post-form button:hover {
+  background-color: #cc580f;
+}
+
+.user-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.post-container {
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid var(--300);
+  border-radius: 8px;
+  background-color: var(--100);
+}
+
+.post-container span {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.post-container h3 {
+  margin: 0 0 8px;
+}
+
+.post-container p {
+  margin: 0 0 12px;
+}
+
+.post-container .post-comments {
+  margin-top: 20px;
+}
+
+.comment-form {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.comment-form input {
+  flex: 1;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid var(--300);
+  border-radius: 4px;
+}
+
+.comment-form button {
+  background-color: #ff7014;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.comment-form button:hover {
+  background-color: #cc580f;
+}
+
+.reaction-display {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+}
+
+.reaction-display span {
+  font-size: 14px;
+  color: var(--700);
+  cursor: pointer;
+  text-decoration: none;
+  margin-right: 10px;
+  transition: color 0.3s ease;
+  text-decoration: underline;
+}
+
+.reaction-display span:hover {
+  color: var(--500);
+}
+
+.reaction-buttons {
+  margin-top: 8px;
+}
+
+.reaction-buttons .reaction-button {
+  background-color: transparent;
+  color: var(--700);
+  font-size: 14px;
+  padding: 4px 12px;
+  border: 1px solid var(--300);
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.reaction-buttons .reaction-button:hover {
+  background-color: var(--700);
+  color: var(--50);
+}
+
+.reaction-buttons .reaction-button-clicked {
+  background-color: var(--700);
+  color: var(--50);
+  font-weight: bold;
+  border: 1px solid var(--800);
+}
+
+.comment-container {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid var(--300);
+  border-radius: 6px;
+  background-color: var(--200);
+}
+
+.comment-container h5 {
+  margin: 0;
+  font-weight: bold;
+}
+
+.comment-container p {
+  margin: 5px 0;
+}
+
+.add-comment-reply {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.add-comment-reply input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid var(--300);
+}
+
+.add-comment-reply button {
+  padding: 8px 12px;
+  background-color: #ff7014;
+  color: var(--50);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-comment-reply button:hover {
+  background-color: #cc580f;
+}
+
+.user-link {
+  text-decoration: none;
+  color: var(--700);
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.user-link:hover {
+  color: #ff7014;
+  text-decoration: underline;
+}
+
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 1000;
+}
+
+.ReactModal__Content {
+  width: 500px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: var(--200);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+button {
+  background-color: #ff7014;
+  color: var(--50);
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #cc580f;
+}
+
+.profile-container {
+  width: 80%;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: var(--100);
+  color: var(--800);
+}
+
+.profile-container h3 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.connection-stats {
+  padding: 1%;
+
+}
+
+.connection-stats span {
+  font-weight: bold;
+  margin-right: 10px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.connection-stats span:hover {
+  color: var(--500);
+}
+
+.post-container, .comment-container { 
+  width: 80%; 
+  margin: auto; 
+  overflow: hidden; 
+  padding: 20px;
+  border: 2px solid var(--900);
+} 
+
+.results-page {
+  width: 80%;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: var(--100);
+  border: 1px solid var(--200);
+  border-radius: 8px;
+}
+
+.results-page h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 28px;
+}
+
+.results-heading {
+  text-align: center;
+}
+
+.user-result {
+  text-align: center;
 }
