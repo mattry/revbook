@@ -232,7 +232,7 @@ class CommentServiceTest {
 
         // Act & Assert
         RuntimeException exception = assertThrows(RuntimeException.class, () -> commentService.reactToComment(commentId, request));
-        assertEquals("Error reacting to post", exception.getMessage());
+        assertEquals("Error reacting to comment", exception.getMessage());
         verify(reactionRepository, never()).save(any(Reaction.class));
     }
 }
