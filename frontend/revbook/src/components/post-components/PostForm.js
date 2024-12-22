@@ -35,7 +35,7 @@ const PostForm = ({ onPostCreated }) => {
         <div className="post-form">
             <form onSubmit={submitHandler}>
                 <label htmlFor="post-field">
-                    <h3>Have something on your mind? Share it!</h3>
+                    <p>Have something on your mind? Share it!</p>
                 </label>
                 <textarea
                     id="post-field"

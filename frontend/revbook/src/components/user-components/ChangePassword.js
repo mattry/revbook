@@ -18,7 +18,7 @@ const ChangePassword = ({currPassword, newPassword, passwordSubmitHandler, setCu
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 required
-            /><br/>
+            /><br/><br/>
             <button>Submit Changes</button><br/>
         </form>
         </>

@@ -33,6 +33,7 @@ const UserFeed = () => {
         return (
             <div>
                 <PostForm onPostCreated={handlePostCreated} />
+                <hr/>
                 <p>No posts to display</p>
             </div>
         );
@@ -41,6 +42,7 @@ const UserFeed = () => {
     return (
         <div className="user-feed">
             <PostForm onPostCreated={handlePostCreated} />
+            <hr/>
             {posts.map((post) => (
                 <PostComponent key={post.postId} post={post} />
             ))}

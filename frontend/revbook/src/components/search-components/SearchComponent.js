@@ -34,6 +34,8 @@ const SearchComponent = () => {
         try{
             const response = await axios.post("http://localhost:8080/search", request);
             navigate("/results", { state: { searchResults: response.data } });
+            // clear the form after search
+            setSearchTerm("");
         } catch (error) {
             console.error("Error performing search: ", error);
         } finally {

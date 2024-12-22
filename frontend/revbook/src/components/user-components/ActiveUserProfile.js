@@ -7,6 +7,7 @@
 */
 
 import ProfileManagement from "./ProfileManagement";
+import PostForm from "../post-components/PostForm"
 import UserPostsComponent from "./UserPostsComponent";
 import ConnectionDisplay from "./ConnectionDisplay";
 import { useState } from "react";
@@ -29,6 +30,9 @@ const ActiveUserProfile = ({displayUser, posts, followers, following}) => {
             </Modal>
             <br/>
             <br/>
+            <hr/>
+            <br/>
+            <PostForm />
             <hr/>
             <br/>
             <UserPostsComponent posts={posts}/>

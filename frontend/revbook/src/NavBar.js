@@ -4,7 +4,11 @@ import SearchComponent from "./components/search-components/SearchComponent";
 
 const NavBar = () => {
 
-    const { user } = useUser();
+    const { user, clearUser } = useUser();
+
+    const handleLogout = () => {
+        clearUser();
+    }
 
     return (
         <div id="navbar">
@@ -13,8 +17,9 @@ const NavBar = () => {
             <>
                 <SearchComponent />
                 <div className="links">
-                    <Link to ="/">Home</Link>
+                    <Link to="/">Home</Link>
                     <Link to={`/user/${user.userId}`}>Profile</Link>
+                    <Link to="/" onClick={handleLogout}>Logout</Link>
                 </div>
             </>
             : null}

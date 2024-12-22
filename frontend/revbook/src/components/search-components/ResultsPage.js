@@ -4,7 +4,6 @@ import SearchDisplay from "./SearchDisplay";
 const ResultsPage = () => {
     const location = useLocation();
 
-    // Check if `state` contains search results
     const searchResults = location.state?.searchResults;
 
     return (
