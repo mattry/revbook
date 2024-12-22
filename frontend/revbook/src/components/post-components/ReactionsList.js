@@ -1,15 +1,18 @@
+import { Link } from 'react-router-dom';
+
 const ReactionsList = ({ reactions, title }) => {
     return (
       <>
-        <h2>{title}</h2>
+      <br/><br/>
+        <h2 className='modal-title'>{title}</h2><br/>
         {reactions.length > 0 ? (
-          <ul>
+          <p>
             {reactions.map((reaction) => (
-              <li key={reaction.id}>
+              <Link to={`/user/${reaction.reacterId}`} className="user-link">
                 {reaction.firstName} {reaction.lastName}
-              </li>
+              </Link>
             ))}
-          </ul>
+          </p>
         ) : (
           <p>No reactions to display</p>
         )}

@@ -67,6 +67,9 @@ const ProfileManagement = () => {
 
     return(
         <>
+        <br/><br/>
+        <h2 className="modal-title">Profile Management</h2>
+        <br/>
         {
             showChangeName ? 
             <ChangeName firstName={firstName} lastName={lastName} nameSubmitHandler={nameSubmitHandler} setFirstName = {setFirstName} setLastName={setLastName} /> 
@@ -77,6 +80,7 @@ const ProfileManagement = () => {
                             setCurrPassword={setCurrPassword} 
                             setNewPassword={setNewPassword} />
         }
+        <br/>
         <button onClick = {() => setShowChangeName(!showChangeName)}>
             {showChangeName ? "Change your password" : "Change your name"}
         </button>

@@ -1,14 +1,19 @@
+import { Link } from 'react-router-dom';
+
 const ConnectionList = ({connections, title}) => {
 
     return(
         <>
-        <h2>{title}</h2>
+        <br/><br/>
+        <h2 className='modal-title'>{title}</h2><br/>
         {connections.length > 0 ? (
-                <ul>
+                <p>
                     {connections.map((connection) => (
-                        <li key={connection.id}>{connection.firstName} {connection.lastName}</li>
+                        <Link to={`/user/${connection.userId}`} className="user-link">
+                                    {connection.firstName} {connection.lastName}
+                        </Link>
                     ))}
-                </ul>
+                </p>
             ) : (
                 <p>Nothing to display</p>
             )}

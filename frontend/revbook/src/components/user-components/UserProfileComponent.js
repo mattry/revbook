@@ -76,14 +76,12 @@ const UserProfileComponent = () => {
         }
     }
 
-
-
     useEffect(() => {
         getUserInformation();
         getPosts();
         getFollowers();
         getFollowing();
-    }, [user]);
+    }, [id]);
     
     // While we wait, let's render this so there is no error on screen
     if (!responseUser) {
