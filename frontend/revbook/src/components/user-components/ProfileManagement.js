@@ -38,8 +38,8 @@ const ProfileManagement = () => {
         };
 
         try {
-            const response = await axios.patch("http://localhost:8080/update-password", request);
-            console.log(response);
+            await axios.patch("http://localhost:8080/update-password", request);
+            
         } catch (error) {
             console.error("Error updating password: ", error);
         }
@@ -47,7 +47,7 @@ const ProfileManagement = () => {
 
     const nameSubmitHandler = async (e) => {
         e.preventDefault();
-        console.log(user.userId);
+ 
 
         const request = {
             userId: user.userId,
@@ -57,7 +57,6 @@ const ProfileManagement = () => {
 
         try{
             const response = await axios.patch("http://localhost:8080/update-name", request);
-            console.log(response);
             updateUser(response.data);
         } catch (error) {
             console.error("Error updating name: ", error);
