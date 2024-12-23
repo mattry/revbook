@@ -4,6 +4,7 @@ import com.revbook.demo.dto.CommentDTO;
 import com.revbook.demo.dto.ReactionDTO;
 import com.revbook.demo.entity.Comment;
 import com.revbook.demo.service.CommentService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,11 @@ public class CommentController {
     CommentService commentService;
 
     @PostMapping("/posts/{postId}/comments")
-    public ResponseEntity<CommentDTO> commentOnPost(@PathVariable Long postId, @RequestBody CommentDTO requestCommentDTO) {
+    public ResponseEntity<CommentDTO> commentOnPost(@PathVariable Long postId, @RequestBody CommentDTO requestCommentDTO, HttpSession session) {
+        Long sessionUserId = (Long) session.getAttribute("userId");
+        if (sessionUserId == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         try {
             CommentDTO createdCommentDTO = commentService.commentOnPost(postId, requestCommentDTO);
             System.out.println("DTO created" + createdCommentDTO);
@@ -31,7 +36,11 @@ public class CommentController {
     }
 
     @PostMapping("/comments/{commentId}/reply")
-    public ResponseEntity<CommentDTO> commentOnComment(@PathVariable Long commentId, @RequestBody CommentDTO requestCommentDTO) {
+    public ResponseEntity<CommentDTO> commentOnComment(@PathVariable Long commentId, @RequestBody CommentDTO requestCommentDTO, HttpSession session) {
+        Long sessionUserId = (Long) session.getAttribute("userId");
+        if (sessionUserId == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         try {
             CommentDTO createdCommentDTO = commentService.commentOnComment(commentId, requestCommentDTO);
             return ResponseEntity.ok(createdCommentDTO);
@@ -41,7 +50,11 @@ public class CommentController {
     }
 
     @GetMapping("/posts/{postId}/comments")
-    public ResponseEntity<List<CommentDTO>> getCommentsByPost(@PathVariable Long postId) {
+    public ResponseEntity<List<CommentDTO>> getCommentsByPost(@PathVariable Long postId, HttpSession session) {
+        Long sessionUserId = (Long) session.getAttribute("userId");
+        if (sessionUserId == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         try {
             List<CommentDTO> commentDTOs = commentService.getCommentDTOsByPostId(postId);
             return ResponseEntity.ok(commentDTOs);
@@ -51,7 +64,11 @@ public class CommentController {
     }
 
     @GetMapping("/comments/{commentId}/replies")
-    public ResponseEntity<Set<CommentDTO>> getChildComments(@PathVariable Long commentId) {
+    public ResponseEntity<Set<CommentDTO>> getChildComments(@PathVariable Long commentId, HttpSession session) {
+        Long sessionUserId = (Long) session.getAttribute("userId");
+        if (sessionUserId == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         try {
             Set<CommentDTO> childCommentDTOs = commentService.getChildCommentDTOs(commentId);
             return ResponseEntity.ok(childCommentDTOs);
@@ -61,7 +78,11 @@ public class CommentController {
     }
 
     @PostMapping("comments/{commentId}/reactions")
-    public ResponseEntity<ReactionDTO> reactToPost (@PathVariable Long commentId, @RequestBody ReactionDTO requestReactionDTO) {
+    public ResponseEntity<ReactionDTO> reactToPost (@PathVariable Long commentId, @RequestBody ReactionDTO requestReactionDTO, HttpSession session) {
+        Long sessionUserId = (Long) session.getAttribute("userId");
+        if (sessionUserId == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         try {
             ReactionDTO madeReactionDTO = commentService.reactToComment(commentId, requestReactionDTO);
             return ResponseEntity.ok(madeReactionDTO);
@@ -72,7 +93,11 @@ public class CommentController {
     }
 
     @GetMapping("/comments/{commentId}/reactions")
-    public ResponseEntity<Set<ReactionDTO>> getPostReactions (@PathVariable Long commentId) {
+    public ResponseEntity<Set<ReactionDTO>> getPostReactions (@PathVariable Long commentId, HttpSession session) {
+        Long sessionUserId = (Long) session.getAttribute("userId");
+        if (sessionUserId == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         try {
             Set<ReactionDTO> reactionDTOS = commentService.getCommentReactions(commentId);
             return ResponseEntity.ok(reactionDTOS);
