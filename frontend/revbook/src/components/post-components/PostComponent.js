@@ -8,7 +8,7 @@ import ReactionsDisplay from "./ReactionsDisplay";
 axios.defaults.withCredentials = true;
 
 const PostComponent = ({ post }) => {
-    const [commentsVisible, setCommentsVisible] = useState(false);
+    const [commentsVisible, setCommentsVisible] = useState(true);
     const [comments, setComments] = useState([]);
     const [newCommentText, setNewCommentText] = useState("");
     const [loaded, setLoaded] = useState(false);
