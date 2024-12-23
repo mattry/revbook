@@ -7,13 +7,16 @@ const ConnectionList = ({connections, title}) => {
         <br/><br/>
         <h2 className='modal-title'>{title}</h2><br/>
         {connections.length > 0 ? (
-                <p>
+                <>
                     {connections.map((connection) => (
+                        <div key={connection.userId}>
                         <Link to={`/user/${connection.userId}`} className="user-link">
                                     {connection.firstName} {connection.lastName}
                         </Link>
+                        <br/>
+                        </div>
                     ))}
-                </p>
+                </>
             ) : (
                 <p>Nothing to display</p>
             )}

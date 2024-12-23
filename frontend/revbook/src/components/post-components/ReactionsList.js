@@ -6,13 +6,15 @@ const ReactionsList = ({ reactions, title }) => {
       <br/><br/>
         <h2 className='modal-title'>{title}</h2><br/>
         {reactions.length > 0 ? (
-          <p>
+          <>
             {reactions.map((reaction) => (
+              <div key={reaction.reacterId}>
               <Link to={`/user/${reaction.reacterId}`} className="user-link">
                 {reaction.firstName} {reaction.lastName}
-              </Link>
+              </Link><br/>
+              </div>
             ))}
-          </p>
+          </>
         ) : (
           <p>No reactions to display</p>
         )}
