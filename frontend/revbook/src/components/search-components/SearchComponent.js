@@ -10,6 +10,8 @@ import { useState } from "react";
 import SearchDisplay from "./SearchDisplay";
 import { useNavigate } from "react-router-dom";
 
+axios.defaults.withCredentials = true;
+
 const SearchComponent = () => {
 
     const navigate = useNavigate();

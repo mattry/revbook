@@ -4,6 +4,8 @@ import ReactionsList from "./ReactionsList";
 import axios from "axios";
 import { useUser } from "../UserContext";
 
+axios.defaults.withCredentials = true;
+
 const ReactionsDisplay = ({ entityId, entityType }) => {
   const [reactions, setReactions] = useState([]); // Stores reactions
   const [reactionType, setReactionType] = useState(""); // Tracks modal type ("LIKE" or "DISLIKE")

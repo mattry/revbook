@@ -2,6 +2,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useUser } from "../UserContext";
 
+axios.defaults.withCredentials = true;
+
 const PostForm = ({ onPostCreated }) => {
 
     const { user } = useUser();

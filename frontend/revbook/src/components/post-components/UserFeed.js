@@ -4,6 +4,8 @@ import PostComponent from "./PostComponent";
 import PostForm from "./PostForm";
 import { useUser } from "../UserContext";
 
+axios.defaults.withCredentials = true;
+
 const UserFeed = () => {
     const { user } = useUser();
     const [posts, setPosts] = useState([]);

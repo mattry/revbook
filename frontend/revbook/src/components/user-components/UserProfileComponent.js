@@ -15,7 +15,10 @@ import { useParams } from "react-router-dom";
 import ActiveUserProfile from "./ActiveUserProfile";
 import ViewUserProfile from "./ViewUserProfile";
 
+axios.defaults.withCredentials = true;
+
 const UserProfileComponent = () => {
+
 
     const { user } = useUser();
     const { id } = useParams();

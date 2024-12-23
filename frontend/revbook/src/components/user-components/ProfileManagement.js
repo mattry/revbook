@@ -15,6 +15,7 @@ import { useUser } from "../UserContext";
 import ChangeName from "./ChangeName";
 import ChangePassword from "./ChangePassword";
 
+axios.defaults.withCredentials = true;
 
 const ProfileManagement = () => {
     const { user } = useUser();

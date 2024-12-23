@@ -8,6 +8,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useUser } from "../UserContext";
 
+axios.defaults.withCredentials = true;
+
 const ConnectionManagement = ({displayUser, getFollowers, getFollowing}) => {
 
     const { user } = useUser();

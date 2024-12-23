@@ -4,6 +4,8 @@ import ReactionsDisplay from "./ReactionsDisplay";
 import { useUser } from "../UserContext";
 import { Link } from "react-router-dom";
 
+axios.defaults.withCredentials = true;
+
 const Comment = ({ comment }) => {
     const [commentsVisible, setCommentsVisible] = useState(false);
     const [commentText, setCommentText] = useState('');
