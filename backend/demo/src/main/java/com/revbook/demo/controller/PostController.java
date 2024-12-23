@@ -5,6 +5,7 @@ import com.revbook.demo.dto.ReactionDTO;
 import com.revbook.demo.entity.User;
 import com.revbook.demo.service.PostService;
 import com.revbook.demo.entity.Post;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,11 @@ public class PostController {
     private PostService postService;
 
     @PostMapping("/posts")
-    public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO requestPostDTO) {
+    public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO requestPostDTO, HttpSession session) {
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         try{
             PostDTO createdPostDTO = postService.createPostDTO(requestPostDTO);
             return ResponseEntity.ok(createdPostDTO);
@@ -35,7 +40,11 @@ public class PostController {
     }
 
     @GetMapping("/feed/{userId}")
-    public ResponseEntity<List<PostDTO>> getFeed(@PathVariable Long userId) {
+    public ResponseEntity<List<PostDTO>> getFeed(@PathVariable Long userId, HttpSession session) {
+        Long sessionUserId = (Long) session.getAttribute("userId");
+        if (sessionUserId == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         try{
             List<PostDTO> feed = postService.getUserFeed(userId);
             return ResponseEntity.ok(feed);
@@ -45,7 +54,11 @@ public class PostController {
     }
 
     @GetMapping("/posts/{userId}")
-    public ResponseEntity<List<PostDTO>> getUserPosts(@PathVariable Long userId) {
+    public ResponseEntity<List<PostDTO>> getUserPosts(@PathVariable Long userId,HttpSession session) {
+        Long sessionUserId = (Long) session.getAttribute("userId");
+        if (sessionUserId == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         try {
             List<PostDTO> userPostDTOs = postService.getUserPostDTOs(userId);
             return ResponseEntity.ok(userPostDTOs);
@@ -55,7 +68,11 @@ public class PostController {
     }
 
     @DeleteMapping("/posts/{postId}")
-    public ResponseEntity<?> deletePostById(@PathVariable Long postId){
+    public ResponseEntity<?> deletePostById(@PathVariable Long postId, HttpSession session){
+        Long sessionUserId = (Long) session.getAttribute("userId");
+        if (sessionUserId == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         try {
             postService.deletePostById(postId);
             return ResponseEntity.ok(1);
@@ -65,7 +82,11 @@ public class PostController {
     }
 
     @PostMapping("posts/{postId}/reactions")
-    public ResponseEntity<ReactionDTO> reactToPost (@PathVariable Long postId, @RequestBody ReactionDTO requestReactionDTO) {
+    public ResponseEntity<ReactionDTO> reactToPost (@PathVariable Long postId, @RequestBody ReactionDTO requestReactionDTO, HttpSession session) {
+        Long sessionUserId = (Long) session.getAttribute("userId");
+        if (sessionUserId == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         try {
             ReactionDTO madeReactionDTO = postService.reactToPost(postId, requestReactionDTO);
             return ResponseEntity.ok(madeReactionDTO);
@@ -76,7 +97,11 @@ public class PostController {
     }
 
     @GetMapping("/posts/{postId}/reactions")
-    public ResponseEntity<Set<ReactionDTO>> getPostReactions (@PathVariable Long postId) {
+    public ResponseEntity<Set<ReactionDTO>> getPostReactions (@PathVariable Long postId, HttpSession session) {
+        Long sessionUserId = (Long) session.getAttribute("userId");
+        if (sessionUserId == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         try {
             Set<ReactionDTO> reactionDTOS = postService.getPostReactions(postId);
             return ResponseEntity.ok(reactionDTOS);
