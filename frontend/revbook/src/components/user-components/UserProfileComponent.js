@@ -84,7 +84,7 @@ const UserProfileComponent = () => {
         getPosts();
         getFollowers();
         getFollowing();
-    }, [id]);
+    }, [id, user]);
     
     // While we wait, let's render this so there is no error on screen
     if (!responseUser) {
