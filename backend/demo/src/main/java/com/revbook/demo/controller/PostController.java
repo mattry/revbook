@@ -17,7 +17,7 @@ import java.util.Set;
     This controller will handle creating posts, serving posts, and deleting posts
 */
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RestController
 public class PostController {
 
