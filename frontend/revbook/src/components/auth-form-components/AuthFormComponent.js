@@ -20,7 +20,7 @@ const AuthFormComponent = () => {
             <h2>Welcome to RevBook!</h2><br/>
             <br/>
             {showLogin ? <UserLogin /> : <UserRegistration />}<br/>
-            <button onClick = {() => setShowLogin(!showLogin)}>
+            <button id="secondary-button" onClick = {() => setShowLogin(!showLogin)}>
                 {showLogin ? "New user? Register" : "Existing user? Sign in"}
             </button>
         </div>

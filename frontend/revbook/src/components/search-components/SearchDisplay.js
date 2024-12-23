@@ -9,15 +9,13 @@ const SearchDisplay = ({results}) => {
         if (!users || users.length === 0) return <p>No users found.</p>
 
         return users.map((user) => (
-            <>
-            <div className="user-result">
-                <div key={user.userId}>
-                <Link to={`/user/${user.userId}`} className="user-link">
-                    {user.firstName} {user.lastName}
-                </Link>
+            <div key={user.userId}>
+                <div className="user-result">    
+                    <Link to={`/user/${user.userId}`} className="user-link">
+                        {user.firstName} {user.lastName}
+                    </Link>
                 </div>
             </div>
-            </>
         ));
     };
 

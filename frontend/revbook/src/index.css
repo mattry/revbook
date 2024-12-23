@@ -135,8 +135,36 @@ body {
   transition: background-color 0.3s ease;
 }
 
+#secondary-button {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: var(--100);
+  color: #ff7014; 
+  border-style: solid;
+
+}
+
+#secondary-button:hover {
+  background-color: var(--200);
+}
+
+#secondary-button:active {
+  background-color: var(--300);
+  transform: scale(0.98);
+}
+
 .auth-form button:hover {
   background-color: #cc580f; 
+}
+
+.auth-form button:active{
+  background-color: #b34b0d;
+  transform: scale(0.98);
 }
 
 .landing-page {
@@ -186,6 +214,11 @@ body {
 
 .post-form button:hover {
   background-color: #cc580f;
+}
+
+.post-form button:active {
+    background-color: #b34b0d;
+    transform: scale(0.98);
 }
 
 .user-feed {
@@ -245,6 +278,11 @@ body {
 
 .comment-form button:hover {
   background-color: #cc580f;
+}
+
+.comment-form button:active {
+  background-color: #b34b0d;
+  transform: scale(0.98);
 }
 
 .reaction-display {
@@ -338,6 +376,11 @@ body {
   background-color: #cc580f;
 }
 
+.add-comment-reply button:active {
+  background-color: #b34b0d;
+  transform: scale(0.98);
+}
+
 .user-link {
   text-decoration: none;
   color: var(--700);
@@ -381,6 +424,11 @@ button {
 
 button:hover {
   background-color: #cc580f;
+}
+
+button:active {
+  background-color: #b34b0d;
+  transform: scale(0.98);
 }
 
 .profile-container {
