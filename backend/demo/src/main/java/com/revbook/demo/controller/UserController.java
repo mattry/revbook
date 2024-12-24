@@ -7,9 +7,7 @@ import com.revbook.demo.dto.UserAuthDTO;
 import com.revbook.demo.exception.EmailAlreadyInUseException;
 import com.revbook.demo.exception.InvalidInputException;
 import com.revbook.demo.service.UserService;
-import com.revbook.demo.entity.User;
 import jakarta.servlet.http.HttpSession;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +26,6 @@ public class UserController {
         try {
             UserDTO registeredUserDTO = userService.registerUser(userAuthDTO);
             session.setAttribute("userId", registeredUserDTO.getUserId());
-            session.setAttribute("userPassword", userAuthDTO.getPassword());
             return ResponseEntity.ok(registeredUserDTO);
         } catch (EmailAlreadyInUseException | InvalidInputException e){
             return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
@@ -38,9 +35,9 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<UserDTO> login(@RequestBody UserAuthDTO userAuthDTO,  HttpSession session) {
         try{
-            UserDTO authUserDTO = userService.authenticate(userAuthDTO);
-            session.setAttribute("userId", authUserDTO.getUserId());
-            return ResponseEntity.ok(authUserDTO);
+            UserDTO userDTO = userService.authenticate(userAuthDTO);
+            session.setAttribute("userId", userDTO.getUserId());
+            return ResponseEntity.ok(userDTO);
         } catch (InvalidInputException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
