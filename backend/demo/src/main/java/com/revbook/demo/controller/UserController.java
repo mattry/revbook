@@ -40,7 +40,6 @@ public class UserController {
         try{
             UserDTO authUserDTO = userService.authenticate(userAuthDTO);
             session.setAttribute("userId", authUserDTO.getUserId());
-            session.setAttribute("userPassword", userAuthDTO.getPassword());
             return ResponseEntity.ok(authUserDTO);
         } catch (InvalidInputException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
